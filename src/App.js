@@ -1,43 +1,38 @@
-import React , {useState} from 'react';
-
-function List(props) {
+import React , {useState,useRef} from 'react';
+const Controlled = () =>{
+  const [state,setState]= useState('')
+  function alertValue() {
+    alert(state)
+    
+  }
   return(
     <div>
-      {props.items.map((item,index)=>{
-        return <h1 key={index}>{item}</h1>
-      })}
+      <input type='text' value={state} onChange={(e)=>setState(e.target.value)}/>
+      <button onClick={alertValue}>Click Controlled</button>
     </div>
   )
 }
 
-const MetaList = ({items}) =>{
+const Uncontrolled = () => {
+  const inputRef = useRef()  
+  function alertValue() {
+    alert(inputRef.current.value)
+    
+  }
   return(
     <div>
-      {items.map((item,index)=>{
-        return <h1 key={index}>{item}</h1>
-      })}
+      <input type='text' ref={inputRef}/>
+      <button onClick={alertValue}>Click Uncontrolled</button>
     </div>
   )
-
-}
-function ItemCount(props) {
-   
-   return <h1>{props.count}</h1>
 }
 
 function App() {
-
-  const [items, setItems] = useState(['ali','massoud','hossein'])
-
-
-
   return (
     <div className="App">
-      <List items={items}></List>
-      <ItemCount count={items.length}></ItemCount>
-      <MetaList items={items}></MetaList>
+        <Controlled/>
+        <Uncontrolled/>
     </div>
   );
 }
-
 export default App;
